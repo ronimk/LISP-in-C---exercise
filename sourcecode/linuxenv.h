@@ -1,0 +1,20 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <signal.h>
+#include <setjmp.h>
+#include <math.h>
+#include <fcntl.h>
+#include <memory.h>
+#include <sys/stat.h>
+#include <sys/file.h>
+#include <string.h>
+#include <strings.h>
+#include <time.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <errno.h>  // in linux: sys/errno.h
+//#include <sys/ioctl.h>
+//#include <sgtty.h>
+#include <stdarg.h>
+#include <values.h>
+#include <stdint.h>

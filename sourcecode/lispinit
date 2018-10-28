@@ -1,0 +1,7 @@
+(SETQ APPEND
+  (LAMBDA (X Y)
+    (COND ((EQ X NIL) Y)
+	  ((ATOM X) (CONS X Y)
+	  (T (CONS (CAR X) (APPEND (CDR X) Y))) ) ) )
+
+/kesken

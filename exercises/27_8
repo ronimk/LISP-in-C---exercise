@@ -1,0 +1,9 @@
+This has been implemented in the code: the gc should be called when more than 80% of total number table storage is in use.
+It is not yet perfect, though. and some subtle bugs may arise when trying to fill more than 80% of the total storage capacity
+during an interpretation of a single expression where already some new numbers or list nodes, for example, have been introduced
+earlier within the interpratation of the same expression but are not yet accessible from any atom...
+
+As for the reason for garbage collecting at 90% or even 80% of total capacity, it will improve the hit/miss ratio of finding
+numbers and introducting new numbers. The hash-function will more likely find empty spaces near the original hash value of a
+number, so the speed performance of looking up or initializing a number atom should be significantly better when garbage collection
+is handled properly vs. only garbage collecting when the entire storage has been used up.

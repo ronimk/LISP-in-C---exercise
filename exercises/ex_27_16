@@ -1,0 +1,4 @@
+TSETQ  sets the global variable of the given symbol to the given value.
+(If the bind list for that symbol is empty, then Atab[symb].L is the global value for the symbol, so TSETQ sets it to the new value
+If the bind list is not empty, TSETQ traverses through the bindlist of the symbol to find the last bind of that symbol,
+which is the global value for the symbol and sets it to the new value given)

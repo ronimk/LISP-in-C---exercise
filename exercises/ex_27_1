@@ -1,0 +1,4 @@
+Ex. 27.1:
+    The lexical tokenizer e recognizes every symbol starting with an @ as a command to read in
+    LISP-expressions from a file denoted by the string that follows the @. Therefore the interpreter
+    knows how to read and execute all the expressions defined in the file lispinit.

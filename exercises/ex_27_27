@@ -1,0 +1,4 @@
+To fix the issues of primitives not checking the arity of the arguments given, my interpreter introduces a custom-built check_arity
+-function, that checks wheter the arity of a built-in function is correct.
+It has one design "fault": it cannot be used in cases when the arity must be AT LEAST as big as some predefined value. For those cases
+the code should be improved on more.

@@ -1,0 +1,3 @@
+garbage collecting atoms in the atom table feels really problematic. For example, how do we know when an atom is obsolete? Undefined atoms can be and are regularly
+exploited in symbolic programming solely for their names, not for their values. Having pointers to undefined symbols in the atom table
+garbage colleted and later replaced by other symbols will most probably break the entire program.

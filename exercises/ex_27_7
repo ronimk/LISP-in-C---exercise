@@ -1,0 +1,2 @@
+The number table is defined as union, so only sizeof(double) bytes are reserved for each entry in it.
+It does not reserve any extra space for nlink.

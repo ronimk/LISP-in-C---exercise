@@ -5,9 +5,8 @@ This repository is meant for the study of Gary D. Knott's Interpreting LISP. To 
 I plan to write the interpreter and work on the exercises of the book. This project is an opportunity for me to delve deeper into the inner workings of a LISP system and gain a basic understanding of garbage collection among other things. It is also a great opportunity to re-familiarize myself with the C programming language by working on a project that is relevant to my interest in programming language design.
 
 UPDATE:
-The source code is done, even some of the exercises are done, but the interpreter seems to be rather buggy.
-The code is heavily (way too heavily) commented. I tried to gain a good understanding of the entire system while I was studying it, and this shows in the commented sections. 
+The source code is done, even some of the exercises are done. The code is heavily (way too heavily) commented. I tried to gain a good understanding of the entire system while I was studying it, and this shows in the commented sections. 
 
 TODO:
-fix the parser, it seems to not be working...
 Finish the rest of the exercises.
+Check for bugs&inprovements.

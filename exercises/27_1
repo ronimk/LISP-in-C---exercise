@@ -4,4 +4,7 @@ If a string like this starts with a @, it is considered a diretive to run code f
 Otherwise the string is interpreted as an atom after converting all the charactes into upper case characters.
 
 However, a bug is introduced if a diretive string to run an external code file or an atom string is longer than 14 characters long, since it is being temporarily stored into nc - a character array of size 15.
-for example - (eq 'aaaabbbbccccddddeeeeffff 'aaaabbbbccccddddeeeeffff) causes an unexpected error.
+
+For example - "(eq 'aaaabbbbccccddddeeeeffff 'aaaabbbbccccddddeeeeffff)" causes an unexpected error and crashes the program execution.
+
+Likewise, "@testingforalongfilenamethatisinfactverymuchtoolong" causes an unexpected error of a dirrefent kind.

@@ -397,7 +397,7 @@ void initlisp(void)
        APPEND, REVERSE, EQUAL, APPLY, MEMBER, INTO, ONTO, NOT, ASSOC, NPROC, PUTPROP, GETPROP and
        REMPROP. */
     topInsave = NULL;
-    //strcpy(g, "@lispinit ");
+    strcpy(g, "@lispinit ");
     /* initialize start & end pointers to the string g: */
     pg = g;
     pge = g + strlen(g);
@@ -494,8 +494,8 @@ int32 e(void)
 
     /* if a token has been pushed back into the input,
        return the pushed back token. sread sometimes
-       checks before hand if a token following the
-       current token is of certain "type". If it's
+       checks beforehand if a token following the
+       current token is of "certain type". If it's
        not, sread commands e to push back the token
        to wait for it to be read properly. However
        the pushed-back token has, by then been transformed
@@ -504,7 +504,7 @@ int32 e(void)
        compute it all over again: */
     if (pb!=0) {t=pb; pb=0; return(t);}
 
-    start: while ((c=getgchar()) EQ BLANK)  /* remove all the blanks */
+    start: while ((c=getgchar()) EQ BLANK);  /* remove all the blanks */
 
     if (c EQ OPENP)
     {
@@ -566,7 +566,7 @@ int32 e(void)
 
             /* set up the new input stream: */
             *g=EOS;
-            pg=pge=0;
+            pg=pge=g;
             prompt='@';
             filep=fopen(nc+1, "r"); /* skip over the @ */
             goto start;
@@ -631,7 +631,13 @@ void fillg(void)
             ourprint(sout);
         }
 
-        if (fgetline(g, 200, filep)<0) return;
+        if (fgetline(g, 200, filep)<0)
+        {
+            *g = '\0';
+            pg  = g;
+            pge = g;
+            return;
+        }
         if (filep EQ stdin)
         {
             fprintf(logfilep, "%s\n", g);
@@ -1279,8 +1285,8 @@ Signals an error if:
     { }
     if (ar EQ 0 && p EQ nilptr) return;
     else
-    {   /* for the purpouses of check_arity, strcat works perfectly as the string concatenator */
-        strcpy(msg, Atab[ptrv(p)].name);
+    {   /* for the purposes of check_arity, strcat works perfectly as the string concatenator */
+        strcpy(msg, Atab[ptrv(f)].name);
         strcat(msg, " application: ");
 
         if (ar>0)

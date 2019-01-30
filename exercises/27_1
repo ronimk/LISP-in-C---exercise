@@ -1,4 +1,4 @@
-Currently, the lexical token scanner e recognizes any string (after stripping it from any leading blank) starting with some character other than:
+Currently, the lexical token scanner e recognizes any string (after stripping it from any leading blanks) starting with some character other than:
 (, ), ', a dot, a digit or either a + or a - followed by either a digit or a dot.
 If a string like this starts with a @, it is considered a diretive to run code from a file.
 Otherwise the string is interpreted as an atom after converting all the charactes into upper case characters.

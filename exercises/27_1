@@ -7,4 +7,4 @@ However, a bug is introduced if a diretive string to run an external code file o
 
 For example - "(eq 'aaaabbbbccccddddeeeeffff 'aaaabbbbccccddddeeeeffff)" causes an unexpected error and crashes the program execution.
 
-Likewise, "@testingforalongfilenamethatisinfactverymuchtoolong" causes an unexpected error of a dirrefent kind.
+Likewise, "@testingforalongfilenamethatisinfactverymuchtoolong" causes an unexpected error.

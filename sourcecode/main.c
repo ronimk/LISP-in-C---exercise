@@ -1,10 +1,7 @@
 /* The GOVOL LISP Interpreter  as described in the book
    Interpreting LISP by Gary D. Knott
    Along with the exercises that modify the textbook
-   implementation Also, all the needlessly lengthy comments
-   are written with the aim to make this adventure in implementing
-   my first C implementation of LISP more understandable
-   and useful for myself.
+   implementation.
 */
 #include "linuxenv.h"
 

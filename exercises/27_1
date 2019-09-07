@@ -1,7 +1,10 @@
-Currently, the lexical token scanner e recognizes any string (after stripping it from any leading blanks) starting with some character other than:
+Q: How does the loading of the input buffer string g with the text @lispinit cause the LISP functions in the file lispinit to be defined?
+
+A: Currently, the lexical token scanner e recognizes any string (after stripping it from any leading blanks) starting with some character other than:
 (, ), ', a dot, a digit or either a + or a - followed by either a digit or a dot.
 If a string like this starts with a @, it is considered a diretive to run code from a file. This is how the interpreter recognizes
-a user's wish to load a file.
+a user's wish to load a file. At this point the interpreter saves the current input stream into topInsave, opens the desired file and switches the input stream to point to that file.
+Afterwards, the interpreter starts to read in and evaluate the contents of the file until it reaches the end of the file, at which point it closes the file, restored the saved input stream and continues the read-eval-print process.
 
 Otherwise the string is interpreted as an atom after converting all the charactes into upper case characters.
 

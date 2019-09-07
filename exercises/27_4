@@ -1,0 +1,22 @@
+The C function fgetc returns -1 (EOF) when it is called at the end of file. If fgetc is called again, it returns -1 again!
+We depend on this behavior in the function fgetline when an "indirect" file, such as the initialization file lispinit) is being read.
+Explain why this is so.
+
+Explanation:
+Basically, if we encounter EOF at the end of a non-empty line, we first read in the line completely, ignore EOF for now,
+interpret the last line in the file, read in the single EOF aagain and at this point we acknowledge it, return -1 and close
+the file. The result is that also the last line gets read in and evaluated properly.
+
+If we had handled the EOF occurence as below:
+
+if (c EQ EOF) return (-1);
+
+The last line of the file would have been ignored by fillg.
+What would really happen is that while g would ge filled one last time, pg and pge would never get updated, and pg would continue
+reading from the place it was left on the semi-last line. No new lines would be read anymore because fgetc would always return 0
+as long as the file was open - because we are already at the end of the file. However, getgchar and lookgchar would still happily
+return the value *pg and getgchar would even increment the pg pointer.
+
+The behaviour in such case should depend entirely on where pg was left off before the last line read in and how long was the last
+line read in. But experimentations so fat have yielded some pretty strange results, so more experimentation is still needed; it seems
+that (most of the time?), a user can just manually input the last code line and everything works as if the bug did not even exist...

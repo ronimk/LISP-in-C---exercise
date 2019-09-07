@@ -103,7 +103,7 @@ int16 nnums = 0;
    whenever possible since that will decrease the
    amount of hash collisions.
 
-/* the number table mark array: used in garbage collection
+   the number table mark array: used in garbage collection
    to mark all the number table entries to be saved. */
 char nmark[n];
 /* It would be interesting and probably a good practice for embedded
@@ -306,18 +306,18 @@ void initlisp(void)
         "LIST", "DO", "COND", "PLUS", "TIMES", "DIFFERENCE", "QUOTIENT", "POWER",
         "FLOOR", "MINUS", "LESSP", "GREATERP", "EVAL", "EQ", "AND", "OR", "SUM",
         "PRODUCT", "PUTPLIST", "GETPLIST", "READ", "PRINT", "PRINTCR", "MKATOM",
-        "BODY", "RPLACA", "RPLACD", "TSETQ", "NULL", "SET"
+        "BODY", "RPLACA", "RPLACD", "TSETQ", "NULL", "SET", "EXIT"
        };
 
     static char BItype[] =
        { 10, 10, 10, 11, 11, 11, 10, 10, 11, 10,
          10, 11, 10, 10, 10, 10, 10, 10, 10, 10,
          10, 10, 10, 11, 11, 10, 10, 10, 10, 10,
-         10, 10, 10, 10, 10, 10, 11, 10, 11
+         10, 10, 10, 10, 10, 10, 11, 10, 11, 11
        };
 
     /* number of built-ins in BI[~] and BItype[~] above */
-    #define NBI 39
+    #define NBI 40
 
     /* allocate a global character array for messages: */
     sout=(char *)calloc(80, sizeof(char));
@@ -403,11 +403,6 @@ void initlisp(void)
     pge = g + strlen(g);
     filep = stdin;
 }
-/* Ex. 27.1:
-    The lexical tokenizer e recognizes every symbol starting with an @ as a command to read in
-    LISP-expressions from a file denoted by the string that follows the @. Therefore the interpreter
-    knows how to read and execute all the expressions defined in the file lispinit.
-*/
 
 int32 sread(void)
 /*---------------------------------------------------------------------------------------------------------
@@ -476,7 +471,7 @@ int32 sread(void)
 int32 e(void)
 {
     double v,f,k,sign;
-    int32 i,t,c;
+    int32 t,c;
     char nc[15], *np;
     struct Insave *tb;
 
@@ -496,6 +491,7 @@ int32 e(void)
        return the pushed back token. sread sometimes
        checks beforehand if a token following the
        current token is of "certain type". If it's
+
        not, sread commands e to push back the token
        to wait for it to be read properly. However
        the pushed-back token has, by then been transformed
@@ -530,7 +526,7 @@ int32 e(void)
         pge=topInsave->pge;
         filep=topInsave->filep;
         topInsave=topInsave->link;
-        if (prompt EQ '@') prompt='>';
+        if (prompt EQ '@') prompt='*';
         goto start;
     }
     if (c EQ SINGLEQ) return 2;
@@ -551,7 +547,7 @@ int32 e(void)
         np=nc;
         *np++=c;    /* put c in nc[0] */
         for (c=lookgchar(); c != BLANK && c != DOT && c!= OPENP && c != CLOSEP; c=lookgchar())
-            *(np++)=getgchar(); /* add a character to nc */
+            *np++ = getgchar(); /* add a character to nc */
         *np=EOS; /* nc is now a string */
         if (*nc EQ '@')
         { /* switch input streams: */
@@ -1162,7 +1158,7 @@ apply:  v=seval(B(f));
                     break;
             case 23:     /* EQ */
                     check_arity(p, 2, ar_ef);
-                    v=(E1 EQ E1)? tptr: nilptr;
+                    v=(E1 EQ E2)? tptr: nilptr;
                     break;
             case 24:     /* AND */
                     while (p!=nilptr && seval(A(p))!=nilptr) p=B(p);
@@ -1258,6 +1254,10 @@ apply:  v=seval(B(f));
                     f=seval(U1);
                     if (type(f)!=8) error("SET application: evaluated first argument is not an atom");
                     goto assign;
+                    break;
+            case 40:    /* EXIT */
+                    check_arity(p, 0, ar_ef);
+                    exit(0);
                     break;
 
             default:  error("dryrot: bad builtin case number");
@@ -1453,4 +1453,3 @@ start:
     }
     else marknum(t, p);
 }
-

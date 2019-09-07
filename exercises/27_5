@@ -1,0 +1,34 @@
+Note that the function fillg loads the string g with a new input line. An additional blank character is added at the end of each line,
+except in certain circumstances having to do with reaching the end of file of an indirect file.
+
+Explain what the circumstances are where an additional final blank is not provided, and explain why, generally, such a final blank
+is provided.
+
+Explanation:
+
+The final blank after a read line insures that a code spanning multiple lines gets tokenized and interpreted correctly. Without this
+mechanism, the next pair of lines, for example:
+(f v1
+v2
+would be read in as:
+(f v1v2) instead of (f v1 v2)
+
+Which would most likely return an error. Of course, a proper indentation of the written code would get rid of this error:
+(f v1
+   v2)
+would work just fine. Yet, relying on proper indentation in a language where proper indentation is not explicitly enforced is just
+bad design.
+
+On the other hand,  trying to read in a non-list line - like v1, the quoted atom 'a or a number like 3 - and then pressing enter,
+would result in the compiler thinking that the user has not finished writing the line and would result in the interpreter wanting
+the user to finish inputting what the computer thinks is an incomplete piece of code (by prompting '>' to the user).
+
+A final blank character is not added if a single EOF was read in from a file. It is not needed, because the ' ' was already added when
+the last line was added in.
+
+As a side note, the way source code files are being handled introduces a subtle bug:
+If the final line of a source file does not "complete" the source code being read in (meaning that the source code contains a list
+sexp in the last line(s) and it has more opening parentheses than closing parentheses), then the evaluator expects the code be completed
+by either the user (if the "@filename" command was fed from the top level) or the calling file (if the "@filename" command was fed from
+another file. Thus the program allows for "incomplete" (AKA erroneous) files to be interpreted as if there was nothing wrong with them.
+This should not be allowed and the evaluator should be modified to handle this bug.
